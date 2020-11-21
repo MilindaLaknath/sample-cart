@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <br />
+
+    <div class="row">
+        <div class="col-md-6 item-box" *ngIf="item">
+            <div class="row">
+                <div class="col-sm-9">
+                    <h2>
+                        {{item.item_name}}
+                    </h2>
+                    <p>
+                        Carton Price: {{item.cartoon_size}}
+                        <br />
+                        No of items in cartoon: ${{item.cartoon_price}}
+                        <br />
+                        Single item price: ${{ (item.cartoon_price/item.cartoon_size)*item.single_item_Price_factor }}
+                        <br />
+                        * You will receive an {{item.discount_percentage * 100}}% discount if you buy
+                        {{item.min_cartoon_for_discount}} cartons
+                    </p>
+                    <h3 *ngIf="totalVal">Total: {{ totalVal }}</h3>
+                </div>
+                <div class="col-sm-3">
+                    <div class="spacer"></div>
+                    <p *ngIf="quantity">
+                        Cartoons: {{ (quantity/item.cartoon_size) - (quantity/item.cartoon_size)%1 }}
+                        Singles: {{ quantity%item.cartoon_size }}
+                    </p>
+                    <div class="form-group">
+                        <input type="number" min="0" class="form-control" placeholder="Quantity" id="quantity"
+                            [(ngModel)]="quantity" />
+                    </div>
+                    <button class="btn btn-primary btn-block btn-md" (click)="addToCart()">
+                        Add to Cart
+                    </button>
+                    <button class="btn btn-primary btn-block btn-md" (click)="getTotal()">
+                        Calculate Price
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 item-box">
+            <h2>Item Cart</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Cartons</th>
+                        <th scope="col">Singles</th>
+                        <th scope="col">Price</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="cart">
+                    <tr *ngFor="let citem of cart.items">
+                        <td>{{citem.item.itemName}}</td>
+                        <td> {{citem.cartons}} </td>
+                        <td> {{citem.singles}} </td>
+                        <td> {{citem.totPrice}} </td>
+                        <td class="btn-group">
+                            <button class="btn btn-danger" (click)="addToCart(citem.item.id)">
+                                remove
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot *ngIf="cart">
+                    <tr>
+                        <td>Total Price</td>
+                        <td></td>
+                        <td></td>
+                        <td> {{cart.total}} </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
