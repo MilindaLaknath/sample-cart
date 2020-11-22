@@ -19,32 +19,32 @@ public class ItemController {
     ItemService itemService;
 
     @PostMapping
-    ResponseEntity<ItemDTO> saveItem(@RequestBody ItemDTO itemDTO) {
-        return new ResponseEntity(itemService.addItem(itemDTO), HttpStatus.OK);
+    public ResponseEntity<ItemDTO> saveItem(@RequestBody ItemDTO itemDTO) {
+        return new ResponseEntity<>(itemService.addItem(itemDTO), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity deleteItem(@PathVariable("id") Integer itemId) {
+    public ResponseEntity<> deleteItem(@PathVariable("id") Integer itemId) {
         itemService.deleteItem(itemId);
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<ItemDTO> getItem(@PathVariable("id") Integer itemId) {
+    public ResponseEntity<ItemDTO> getItem(@PathVariable("id") Integer itemId) {
         ItemDTO itemDTO = itemService.getItem(itemId);
-        return new ResponseEntity<ItemDTO>(itemDTO, HttpStatus.OK);
+        return new ResponseEntity<>(itemDTO, HttpStatus.OK);
     }
 
     @GetMapping()
-    ResponseEntity<List<ItemDTO>> getItem() {
+    public ResponseEntity<List<ItemDTO>> getItem() {
         List<ItemDTO> itemDTOList = itemService.getItems();
-        return new ResponseEntity<List<ItemDTO>>(itemDTOList, HttpStatus.OK);
+        return new ResponseEntity<>(itemDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/calc/{id}")
-    ResponseEntity<Double> calculateTotal(@PathVariable("id") Integer itemId, @Valid @Min(value = 1) @RequestParam("qty") Integer qty){
+    public ResponseEntity<Double> calculateTotal(@PathVariable("id") Integer itemId, @Valid @Min(value = 1) @RequestParam("qty") Integer qty){
         Double totVal = itemService.getTotalValue(itemId,qty);
-        return new ResponseEntity<Double>(totVal, HttpStatus.OK);
+        return new ResponseEntity<>(totVal, HttpStatus.OK);
     }
 
 }

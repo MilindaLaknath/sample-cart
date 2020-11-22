@@ -73,9 +73,7 @@ public class CartServiceImpl implements CartService {
 
         cartItemRepository.save(cartItem);
 
-        CartDTO cartDTO = getCart(cartId);
-
-        return cartDTO;
+        return getCart(cartId);
     }
 
     @Override
