@@ -34,6 +34,15 @@ public class ItemServiceTest {
         Assert.assertEquals(231.875,totVal.doubleValue(),DELTA);
     }
 
+    @Test
+    public void testTotalWhenDiscountApply(){
+        Item item = getItem();
+        Mockito.when(itemRepository.findById(item.getId())).thenReturn(Optional.of(item));
+        Double totVal = service.getTotalValue(item.getId(),125);
+        Assert.assertEquals(1106.875,totVal.doubleValue(),DELTA);
+    }
+
+
     private Item getItem(){
         Item item = new Item();
         item.setId(1);

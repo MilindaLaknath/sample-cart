@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -40,7 +42,7 @@ public class ItemController {
     }
 
     @GetMapping("/calc/{id}")
-    ResponseEntity<Double> calculateTotal(@PathVariable("id") Integer itemId, @RequestParam("qty") Integer qty){
+    ResponseEntity<Double> calculateTotal(@PathVariable("id") Integer itemId, @Valid @Min(value = 1) @RequestParam("qty") Integer qty){
         Double totVal = itemService.getTotalValue(itemId,qty);
         return new ResponseEntity<Double>(totVal, HttpStatus.OK);
     }
